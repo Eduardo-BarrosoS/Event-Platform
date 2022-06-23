@@ -1,16 +1,67 @@
 import { DblClickFullscreen, DefaultUi, Player, Youtube } from "@vime/react";
 import { CaretRight, DiscordLogo, FileArrowDown, Image, Lightning } from "phosphor-react";
+import { gql, useQuery } from "@apollo/client";
+
+
 import '@vime/core/themes/default.css'
 
 
-export function Video() {
+const GET_LESSON_SLUG_QUERY = gql`
+    query GetLessonBySlug($slug: String) {
+        lesson(where: {slug: $slug}){
+            title
+            videoId
+            description
+            teacher {
+            bio
+            name
+            avatarURL
+            }
+        }
+        }
+
+`
+
+interface IvideoProps {
+    lessonSlug: string;
+}
+
+interface IGetLessonBySlugResponse {
+    lesson: {
+        title: string;
+        videoId: string;
+        description: string;
+        teacher: {
+            bio: string;
+            name: string;
+            avatarURL: string;
+        }
+    }
+}
+
+
+export function Video(props: IvideoProps) {
+
+    const { data } = useQuery<IGetLessonBySlugResponse>(GET_LESSON_SLUG_QUERY, {
+        variables: {
+            slug: props.lessonSlug
+        }
+    })
+
+    console.log(data)
+
+    if (!data) {
+        return (<div className="flex-1"><h1>Carregando...</h1></div>)
+    }
+
+
     return (
         <div className="flex-1">
 
             <div className="bg-black flex justify-center items-center">
-                <div className="w-full h-full max-w-[1100px] max-h-[60vh] aspect-video bg-white">
+                <div className="w-full h-full max-w-[1100px] max-h-[60vh] aspect-video bg-black">
                     <Player>
-                        <Youtube videoId="KJj70dBgRPo"/>
+                        <Youtube  videoId={data?.lesson.videoId}/>
                         <DefaultUi />
                         <DblClickFullscreen />
                     </Player>
@@ -20,7 +71,7 @@ export function Video() {
                 <div className="flex items-start gap-16">
                     <div className="flex-1">
                         <h1 className="text-gray-100 text-2xl font-bold mb-4">
-                            Aula 01 - Criando o projeto e realizando o setup inicial
+                           { data?.lesson.title }
                         </h1>
                         <p className="text-gray-200 font-normal leading-relaxed">
                             Nessa aula vamos dar início ao projeto criando a estrutura 
@@ -33,14 +84,14 @@ export function Video() {
                         <div className="flex items-center gap-4 mt-6">
                             <img
                                 className="rounded-full h-16 border-2 border-blue-500" 
-                                src="https://github.com/Eduardo-BarrosoS.png" 
+                                src={data?.lesson.teacher.avatarURL} 
                                 alt="Foto de perfil" />
                             <div className="leading-relaxed"> 
                                 <strong className="font-bold text-2xl block">
-                                    Eduardo Barroso
+                                    {data?.lesson.teacher.name}
                                 </strong>
                                 <span className="text-gray-200 text-sm block">
-                                    Educador
+                                    {data?.lesson.teacher.bio}
                                 </span>
                             </div>
                         </div>

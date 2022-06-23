@@ -1,6 +1,7 @@
 import { CheckCircle, Lock } from "phosphor-react";
 import { format, isPast,  } from 'date-fns'
 import { ptBR } from "date-fns/locale";
+import { Link } from "react-router-dom";
 
 interface ILessonProps {
     title: string;
@@ -16,11 +17,11 @@ export function Lesson(props: ILessonProps) {
         locale: ptBR,
     })
     return ( 
-        <a href="#" className="">
+        <Link to={`/event/lesson/${props.slug}`} className="group">
             <span className="text-gray-300">
                 {availableDatewFormated}
             </span>
-            <div className="rounded border border-gray-600 p-4 mt-2">
+            <div className="rounded border border-gray-600 p-4 mt-2 group-hover:border-green-500">
                 <header className="flex items-center justify-between">
                     {
                         isLessonAvailable ? (
@@ -44,7 +45,7 @@ export function Lesson(props: ILessonProps) {
                     {props.title}
                 </strong>
             </div>
-        </a>
+        </Link>
      );
 }
 
