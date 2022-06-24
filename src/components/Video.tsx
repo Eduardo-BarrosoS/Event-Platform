@@ -2,7 +2,6 @@ import { DblClickFullscreen, DefaultUi, Player, Youtube } from "@vime/react";
 import { CaretRight, DiscordLogo, FileArrowDown, Image, Lightning } from "phosphor-react";
 import { gql, useQuery } from "@apollo/client";
 
-
 import '@vime/core/themes/default.css'
 
 
@@ -114,7 +113,7 @@ export function Video(props: IvideoProps) {
 
                 </div>
                 <div className="gap-8 mt-20 grid grid-cols-2">
-                    <a href="" className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover: bg-gray-600 transition-colors">
+                    <a href="" className="bg-gray-900 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors">
                         <div className="bg-green-700 h-full p-6 flex items-center">
                             <FileArrowDown size={24}/> 
                         </div>
@@ -130,7 +129,7 @@ export function Video(props: IvideoProps) {
                             <CaretRight size={24}/>
                         </div>
                     </a>
-                    <a href="" className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover: bg-gray-600 transition-colors">
+                    <a href="" className="bg-gray-900 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors" >
                         <div className="bg-green-700 h-full p-6 flex items-center">
                             <Image size={24}/> 
                         </div>
