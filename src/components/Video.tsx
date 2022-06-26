@@ -1,5 +1,7 @@
 import { DblClickFullscreen, DefaultUi, Player, Youtube } from "@vime/react";
 import { CaretRight, DiscordLogo, FileArrowDown, Image, Lightning } from "phosphor-react";
+import { VideoLoader } from "./VideoLoader";
+
 
 import '@vime/core/themes/default.css'
 import { useGetLessonBySlugQuery } from "../graphql/genereted";
@@ -17,10 +19,10 @@ export function Video(props: IvideoProps) {
         }
     })
 
-    console.log(data)
-
     if (!data || !data.lesson) {
-        return (<div className="flex-1"><h1>Carregando...</h1></div>)
+        return (<div className="flex-1">
+            <VideoLoader />
+        </div>)
     }
 
 

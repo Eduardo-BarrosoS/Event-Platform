@@ -2,7 +2,8 @@ import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../components/Logo";
 import { useCreateSubscriberMutation } from "../graphql/genereted";
-
+import cedeMockupImg from '../../src/assets/code-mockup.png'
+import reactIcon from '../../src/assets/reactJS-icon.png'
 
 export function Subscribe() {
     const [createSubscriber, { loading }] = useCreateSubscriberMutation()
@@ -28,6 +29,7 @@ export function Subscribe() {
     return ( 
         <>
             <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
+                <img src={reactIcon} alt="" className="absolute z-[-10]" />
                 <div className="w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto">
                     <div className="max-w-[640px]">
                         <Logo />
@@ -43,7 +45,7 @@ export function Subscribe() {
                     </div>
 
                     <div className="p-8 bg-gray-700 border border-gray-500 rounded">
-                        <strong className="text-2xl mb-6 block">Increva-se Gratuitamente</strong>
+                        <strong className="text-2xl mb-6 block">Inscreva-se Gratuitamente</strong>
                         <form 
                             onSubmit={handleSubscriber}
                             className="flex flex-col gap-2 w-full "
@@ -70,7 +72,7 @@ export function Subscribe() {
                         </form>
                     </div>
                 </div>
-                <img src="/src/assets/code-mockup.png" className="mt-10" alt="" />
+                <img src={cedeMockupImg} className="mt-10" alt="" />
 
             </div>
         </>
