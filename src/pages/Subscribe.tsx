@@ -1,30 +1,25 @@
-import { useState, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { Logo } from "../components/Logo";
-import { useCreateSubscriberMutation } from "../graphql/genereted";
 import cedeMockupImg from '../../src/assets/code-mockup.png'
 import reactIcon from '../../src/assets/reactJS-icon.png'
+import { LoginFrom } from "../components/autentication/LoginForm";
+import { SingUpForm } from "../components/autentication/SingUpForm";
+import { useState } from "react";
 
 export function Subscribe() {
-    const [createSubscriber, { loading }] = useCreateSubscriberMutation()
-    const navigate = useNavigate()
 
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-
-    
-    async function handleSubscriber(event: FormEvent) {
+// =======================================================
+    const [login, setLogin] = useState(false)
+    function handleLogin() {
         event?.preventDefault()
-        console.log(name, email)
-        await createSubscriber({
-            variables: {
-                name, 
-                email,
-            }
-        })
-
-        navigate('/event')
+        setLogin(true)
     }
+    function handleSingUp() {
+        event?.preventDefault()
+        setLogin(false)
+    }
+// =======================================================
+
+
 
     return ( 
         <>
@@ -45,34 +40,30 @@ export function Subscribe() {
                     </div>
 
                     <div className="p-8 bg-gray-700 border border-gray-500 rounded">
-                        <strong className="text-2xl mb-6 block">Inscreva-se Gratuitamente</strong>
-                        <form 
-                            onSubmit={handleSubscriber}
-                            className="flex flex-col gap-2 w-full "
-                            action="">
-                                <input 
-                                    type="text" 
-                                    placeholder="Seu nome completo"
-                                    className="bg-gray-900 rounded px-5 h-14 "
-                                    onChange={event => setName(event.target.value)}
-                                    />
-                                <input 
-                                    type="email"
-                                    className="bg-gray-900 rounded px-5 h-14 "
-                                    placeholder="Digite seu e-mail"
-                                    onChange={event => setEmail(event.target.value)}
-                                />
-
-                                <button 
-                                    disabled={loading}
-                                    className="mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-no-drop"
-                                    type="submit">
-                                    Ganhar minha vaga
-                                </button>
-                        </form>
+                        
+                        {
+                            login ? (
+                            <>
+                                <LoginFrom /> 
+                                <p className="mt-2">Ainda não tenho uma conta: 
+                                    <button id="login" onClick={handleSingUp} className="ml-2">Cadastrar</button>
+                                </p>   
+                            </>
+                            ): (
+                            <>
+                                <SingUpForm />
+                                <p className="mt-2">Já tenho uma conta: 
+                                    <button id="login" onClick={handleLogin} className="ml-2">Entrar</button>
+                                </p>  
+                            </>
+                            )
+                        }
+                        
                     </div>
+
+
                 </div>
-                <img src={cedeMockupImg} className="mt-10" alt="" />
+                <img src={cedeMockupImg} className="mt-5" alt="" />
 
             </div>
         </>

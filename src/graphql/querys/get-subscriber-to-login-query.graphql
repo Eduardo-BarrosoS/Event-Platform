@@ -1,0 +1,6 @@
+query GetUserToLogin($email: String!, $password: String!) {
+  subscriber(where: {email: $email, password: $password,}) {
+    email
+    password
+  }
+}
